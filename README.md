@@ -5,6 +5,7 @@ This library helps with managing browser instantiation and clean-up automaticall
 ## Pre-requisites
 * Cucumber ( Compatibility testing has only been done for `group: 'info.cukes', name: 'cucumber-java', version: '1.2.5'`)
 * JDK-8 ( This implementation uses a reflection based mechanism to alter annotations values at runtime. This has been tested only on JDK8)
+* Cucumber TestNG integration (This implementation does not work with the JUnit based Cucumber runner)
 
 ## Maven dependency
 
