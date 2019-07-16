@@ -1,1 +1,2 @@
 com.rationaleemotions.cucumber.CucumberOptionsInjectingListener
+com.rationaleemotions.testng.BrowserSpawningTestNGListener

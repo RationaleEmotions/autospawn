@@ -9,6 +9,7 @@ public final class DriverFactory {
   private static final String className =
       System.getProperty(JVM_ARG, NoOperationalBrowserCreator.class.getName());
   private static ThreadLocal<RemoteWebDriver> driverThreadLocal = new ThreadLocal<>();
+  private static final IBrowserCreator creator = getCreator();
 
   private DriverFactory() {
     // Factory like implementation. Defeat instantiation.
@@ -25,7 +26,7 @@ public final class DriverFactory {
 
   public static void createDriver() {
     if (driverThreadLocal.get() == null) {
-      setDriver(getCreator().createDriver());
+      setDriver(creator.createDriver());
     }
   }
 
