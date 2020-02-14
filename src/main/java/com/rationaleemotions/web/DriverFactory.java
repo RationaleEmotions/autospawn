@@ -32,7 +32,10 @@ public final class DriverFactory {
 
   /** Quits the driver object if exists */
   public static void quitDriver() {
-    getDriver().quit();
+    RemoteWebDriver driver = driverThreadLocal.get();
+    if (driver != null) {
+      driver.quit();
+    }
     setDriver(null);
   }
 
