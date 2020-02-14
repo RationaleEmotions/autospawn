@@ -7,7 +7,7 @@
 
   <groupId>com.rationaleemotions</groupId>
   <artifactId>autospawn</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2-SNAPSHOT</version>
 
   <name>autospawn</name>
   <url>http://maven.apache.org</url>
