@@ -8,7 +8,7 @@ public final class DriverFactory {
   static final String JVM_ARG = "creator";
   private static final String className =
       System.getProperty(JVM_ARG, NoOperationalBrowserCreator.class.getName());
-  private static ThreadLocal<RemoteWebDriver> driverThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<RemoteWebDriver> driverThreadLocal = new ThreadLocal<>();
   private static final IBrowserCreator creator = getCreator();
 
   private DriverFactory() {

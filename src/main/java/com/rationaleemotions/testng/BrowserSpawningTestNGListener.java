@@ -3,16 +3,20 @@ package com.rationaleemotions.testng;
 import com.rationaleemotions.web.Browser;
 import com.rationaleemotions.web.DriverFactory;
 import java.util.logging.Logger;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
 
-public class BrowserSpawningTestNGListener extends TestListenerAdapter {
+public class BrowserSpawningTestNGListener implements IInvokedMethodListener {
   private static final Logger LOG = Logger.getLogger(BrowserSpawningTestNGListener.class.getName());
 
   @Override
-  public void onTestStart(ITestResult result) {
-    ITestNGMethod tm = result.getMethod();
+  public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+    if (method.isConfigurationMethod()) {
+      return;
+    }
+    ITestNGMethod tm = method.getTestMethod();
     if (needsBrowser(tm)) {
       LOG.info("Auto Spawning a browser for the test method : [" + prettify(tm) + "]");
       DriverFactory.createDriver();
@@ -20,23 +24,11 @@ public class BrowserSpawningTestNGListener extends TestListenerAdapter {
   }
 
   @Override
-  public void onTestSuccess(ITestResult tr) {
-    cleanup(tr);
-  }
-
-  @Override
-  public void onTestFailure(ITestResult tr) {
-    cleanup(tr);
-  }
-
-  @Override
-  public void onTestSkipped(ITestResult tr) {
-    cleanup(tr);
-  }
-
-  @Override
-  public void onTestFailedButWithinSuccessPercentage(ITestResult tr) {
-    super.onTestFailedButWithinSuccessPercentage(tr);
+  public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+    if (method.isConfigurationMethod()) {
+      return;
+    }
+    cleanup(testResult);
   }
 
   private void cleanup(ITestResult tr) {
@@ -56,8 +48,6 @@ public class BrowserSpawningTestNGListener extends TestListenerAdapter {
   }
 
   private static String prettify(ITestNGMethod method) {
-    String clazzname = method.getTestClass().getRealClass().getName();
-    String methodname = method.getMethodName();
-    return clazzname + "." + methodname + "()";
+    return method.getQualifiedName() + "()";
   }
 }
